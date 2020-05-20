@@ -2,6 +2,9 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
 require("dotenv").config();
+const passport=require("passport")
+//configure passport
+require('./config/passport')(passport);
 
 //connect to mongodb
 mongoose.connect(process.env.DB_URL,{useNewUrlParser:true,useUnifiedTopology:true})
@@ -10,6 +13,7 @@ mongoose.connect(process.env.DB_URL,{useNewUrlParser:true,useUnifiedTopology:tru
 
 //body parser
 app.use(express.json());
+app.use(passport.initialize())
 
 //userapi
 app.use('/user',require('./routes/userapi'))
